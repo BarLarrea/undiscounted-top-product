@@ -1,0 +1,5 @@
+{
+  "$schema": "https://dev.wix.com/wix-cli/schemas/wix-config.json",
+  "appId": "08088b02-d507-462a-9480-a85e939a28b5",
+  "projectId": "undiscounted-top-product"
+}
