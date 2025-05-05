@@ -76,9 +76,30 @@ export const MostExpensiveProductCard: React.FC<
                     {!isLoading && !error && !product && (
                         <Box
                             align='center'
-                            padding='12px'
+                            padding='10px'
+                            direction='vertical'
+                            gap='SP2'
                         >
-                            <Text>No non-discounted products found</Text>
+                            <Text
+                                weight='bold'
+                                color='success'
+                            >
+                                All your products are already discounted! 🎉
+                            </Text>
+                            <Text
+                                size='small'
+                                secondary
+                            >
+                                There are currently no full-priced products to
+                                display.
+                            </Text>
+                            <Text
+                                size='small'
+                                secondary
+                            >
+                                Try removing a discount or refrash to see a
+                                product here.
+                            </Text>
                         </Box>
                     )}
 
@@ -92,7 +113,10 @@ export const MostExpensiveProductCard: React.FC<
                                 flexShrink={0}
                             >
                                 <Image
-                                    src={product.imageUrl || "/placeholder.svg"}
+                                    src={
+                                        product.imageUrl ||
+                                        "/svg/placeholder.svg"
+                                    }
                                     alt={product.name}
                                     style={{
                                         width: "100%",

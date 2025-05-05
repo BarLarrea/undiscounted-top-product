@@ -58,7 +58,7 @@ export const DiscountDashboardPage = () => {
             });
             setTimeout(() => {
                 dashboard.navigateBack();
-            }, 2000);
+            }, 1500);
         } catch (err) {
             console.error("Error applying discount:", err);
             setSuccessMessage("Failed to apply discount. Please try again.");
