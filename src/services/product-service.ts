@@ -11,7 +11,6 @@ export interface Product {
 }
 
 // Function to get the most expensive non-discounted product
-
 export async function getMostExpensiveNonDiscountedProduct(): Promise<Product | null> {
     try {
         const response = await products.queryProducts().limit(100).find();
@@ -52,15 +51,18 @@ export async function getMostExpensiveNonDiscountedProduct(): Promise<Product | 
 }
 
 // Function to apply a discount to a product
+
 export async function applyDiscountToProduct(
     productId: string,
     discountPercentage: number
 ): Promise<boolean> {
     try {
-        const response = (await products.getProduct(productId)) as any;
+        const response: products.GetProductResponse = await products.getProduct(
+            productId
+        );
         const product = response.product;
 
-        const originalPrice = product.priceData?.price;
+        const originalPrice = product?.priceData?.price;
 
         if (!originalPrice || typeof originalPrice !== "number") {
             throw new Error("Invalid or missing product price");
@@ -72,18 +74,14 @@ export async function applyDiscountToProduct(
 
         await products.updateProduct(productId, {
             priceData: {
-                discountedPrice: discountedPrice
+                discountedPrice
             },
             discount: {
-                type: "PERCENT" as string,
+                type: "PERCENT",
                 value: discountPercentage
             } as any
         });
 
-        console.log("Discount applied successfully");
-        console.log(
-            `Applying discount: ${originalPrice} -> ${discountedPrice}`
-        );
         return true;
     } catch (error) {
         console.error("Error applying discount:", error);
