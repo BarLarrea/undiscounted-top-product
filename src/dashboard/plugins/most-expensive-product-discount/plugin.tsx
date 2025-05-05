@@ -8,24 +8,22 @@ import { MostExpensiveProductCard } from "../../../components/MostExpensiveProdu
 
 type Props = plugins.Products.ProductsBannerParams;
 
-const Plugin: FC<Props> = (props) => {
+const DISCOUNT_PAGE_ID = "57890c16-4c6a-4ae2-9551-49a6b1f2f7d7";
+
+const Plugin: FC<Props> = () => {
     const { product, isLoading, error } = useMostExpensiveProduct();
 
     const navigateToDashboardPage = () => {
         try {
-            console.log("Navigating to dashboard page...");
-
             dashboard.navigate(
-                { pageId: "57890c16-4c6a-4ae2-9551-49a6b1f2f7d7" },
+                { pageId: DISCOUNT_PAGE_ID },
                 { displayMode: "main" }
             );
-
-            console.log("Navigation command sent successfully");
         } catch (e) {
             console.error("Navigation error:", e);
         }
     };
-    
+
     return (
         <WixDesignSystemProvider>
             <MostExpensiveProductCard
@@ -40,5 +38,3 @@ const Plugin: FC<Props> = (props) => {
 };
 
 export default Plugin;
-
-

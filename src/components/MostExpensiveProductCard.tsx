@@ -46,7 +46,7 @@ export const MostExpensiveProductCard: React.FC<
         <Card>
             <Card.Header
                 title='Most expensive product'
-                subtitle='This is the most expensive product that is not already discounted.'
+                subtitle='This is the most expensive product that is not already discounted'
             />
             <Divider />
             <Card.Content size='medium'>
@@ -97,7 +97,7 @@ export const MostExpensiveProductCard: React.FC<
                                 size='small'
                                 secondary
                             >
-                                Try removing a discount or refrash to see a
+                                Try removing a discount or refresh to see a
                                 product here.
                             </Text>
                         </Box>
@@ -113,11 +113,8 @@ export const MostExpensiveProductCard: React.FC<
                                 flexShrink={0}
                             >
                                 <Image
-                                    src={
-                                        product.imageUrl ||
-                                        "/svg/placeholder.svg"
-                                    }
-                                    alt={product.name}
+                                    src={product.imageUrl || "/placeholder.svg"}
+                                    alt={product.name || "Product image"}
                                     style={{
                                         width: "100%",
                                         height: "auto",
@@ -169,23 +166,12 @@ export const MostExpensiveProductCard: React.FC<
                                 )}
 
                                 <Box marginTop='SP3'>
-                                    {" "}
                                     <Button
                                         prefixIcon={<DiscountSmall />}
                                         onClick={onActionClick}
                                         disabled={isActionLoading}
                                         priority='primary'
                                         size='large'
-                                        cursor='pointer'
-                                        style={{
-                                            backgroundColor: "#3366FF",
-                                            color: "white",
-                                            borderRadius: "50px",
-                                            border: "none",
-                                            padding: "12px 24px",
-                                            fontSize: "16px",
-                                            fontWeight: "normal"
-                                        }}
                                     >
                                         {isActionLoading
                                             ? "Applying..."
@@ -200,3 +186,5 @@ export const MostExpensiveProductCard: React.FC<
         </Card>
     );
 };
+
+export default MostExpensiveProductCard;

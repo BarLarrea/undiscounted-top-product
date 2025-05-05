@@ -1,67 +1,54 @@
 import React, { useState } from "react";
-import {
-    Page,
-    Card,
-    Text,
-    Heading,
-    Button,
-    Image,
-    Input,
-    FormField,
-    Box,
-    WixDesignSystemProvider
-} from "@wix/design-system";
+import { Page, Text, Box, WixDesignSystemProvider } from "@wix/design-system";
 import { dashboard } from "@wix/dashboard";
 import { applyDiscountToProduct } from "../../../services/product-service";
 import { useMostExpensiveProduct } from "../../../hooks/useProductsQuery";
 import { MostExpensiveProductCard } from "../../../components/MostExpensiveProductCard";
+import "@wix/design-system/styles.global.css";
+
 
 export const DiscountDashboardPage = () => {
     const { product, isLoading, error, refetch } = useMostExpensiveProduct();
     const [discountPercentage, setDiscountPercentage] = useState("10");
     const [isApplying, setIsApplying] = useState(false);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
     const applyDiscount = async () => {
-        if (!product) {
-            setSuccessMessage("No product selected");
-            return;
-        }
-
-        if (!product.id) {
-            setSuccessMessage("Product ID is missing");
+        if (!product?.id) {
+            setStatusMessage("No product selected");
             return;
         }
 
         const discount = Number(discountPercentage);
         if (isNaN(discount) || discount <= 0 || discount > 99) {
-            setSuccessMessage("Discount must be between 1 and 99");
+            setStatusMessage("Discount must be between 1 and 99");
             return;
         }
+
         if (isApplying) {
-            setSuccessMessage("Already applying discount");
+            setStatusMessage("Already applying discount");
             return;
         }
 
         setIsApplying(true);
-        setSuccessMessage(null);
+        setStatusMessage(null);
 
         try {
-            await applyDiscountToProduct(
-                product.id,
-                Number(discountPercentage)
-            );
+            await applyDiscountToProduct(product.id, discount);
             await refetch();
+
             dashboard.showToast({
                 message: "Great! The discount has been applied.",
                 type: "success"
             });
+
+            // Wait for the success toast to be visible before navigating back
             setTimeout(() => {
                 dashboard.navigateBack();
             }, 1500);
         } catch (err) {
             console.error("Error applying discount:", err);
-            setSuccessMessage("Failed to apply discount. Please try again.");
+            setStatusMessage("Something went wrong. Please try again.");
         } finally {
             setIsApplying(false);
         }
@@ -110,6 +97,11 @@ export const DiscountDashboardPage = () => {
                             isActionLoading={isApplying}
                             actionLabel='Apply discount'
                         />
+                        {statusMessage && (
+                            <Box marginTop='12px'>
+                                <Text>{statusMessage}</Text>
+                            </Box>
+                        )}
                     </Box>
                 </Page.Content>
             </Page>
