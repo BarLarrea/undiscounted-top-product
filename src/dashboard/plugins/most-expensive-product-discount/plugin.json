@@ -1,0 +1,6 @@
+{
+  "$schema": "https://dev.wix.com/wix-cli/schemas/dashboard-plugin.json",
+  "id": "69bbc02f-4031-41d4-a8d1-cf672ef6a053",
+  "title": "Most Expensive Product Discount",
+  "extends": "3ca518a6-8ae7-45aa-8cb9-afb3da945081"
+}
